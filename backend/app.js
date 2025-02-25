@@ -49,7 +49,7 @@ app.use('/api/v1/comments', authenticateUser ,commentRoutes);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5500;
 
 const start = async () => {
   try {
