@@ -2,7 +2,6 @@ require('dotenv').config();
 require('express-async-errors');
 
 const express = require('express');
-
 //extra security packages
 const helmet = require('helmet');
 const cors = require('cors');
@@ -33,17 +32,16 @@ app.use(rateLimiter({
 app.use(express.json());
 app.use(helmet());
 app.use(cors({
-  origin: [""],  //надо изменить на фронтэнд-домен!!!!
+  origin: ["http://localhost:5500"],  //надо изменить и добавить фронтэнд-домен!!!!
   methods: "GET, POST, PATCH, DELETE",
   credentials: true,
 }));
 app.use(xss());
-
 app.use(express.static("public"));
 
 // routes
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/feedback', authenticateUser ,feedbackRoutes);
+app.use('/api/v1/feedback', feedbackRoutes);
 app.use('/api/v1/comments', authenticateUser ,commentRoutes);
 
 app.use(notFoundMiddleware);

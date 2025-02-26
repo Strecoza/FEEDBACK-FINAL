@@ -16,7 +16,7 @@ const FeedbackSchema = new mongoose.Schema({
         default: 0,
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true, 
     },
@@ -35,6 +35,7 @@ FeedbackSchema.methods.toJSON = function () {
     const obj = this.toObject();
     obj.id = obj._id;
     delete obj._id;
+    delete obj._v;
     return obj;
 };
 

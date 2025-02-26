@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/", authMiddleware, createFeedback);
 
 //get all feedbacks
-router.post("/", getAllFeedbacks);
+router.get("/", getAllFeedbacks);
 
 //get, update and delete feedback
 router.route("/:id")
