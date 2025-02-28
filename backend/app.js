@@ -38,7 +38,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(xss());
-app.use(express.static("public"));
+//app.use(express.static("public"));
 
 // routes
 app.use('/api/v1/auth', authRoutes);
@@ -53,7 +53,7 @@ const port = process.env.PORT || 10000;
 const start = async () => {
   try {
     await connectDB (process.env.MONGO_URI)
-    app.listen(port, () =>
+    app.listen(port, "0.0.0.0", () =>
       console.log(`Server is listening on port ${port}...`)
     );
   } catch (error) {
