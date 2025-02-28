@@ -38,11 +38,19 @@ const login = async (req, res) => {
     id: user._id,
     username: user.username,
     email: user.email,
-    createdAt: user.cteatedAt 
+    createdAt: user.createdAt 
   }, token })
 }
+
+const getCurrentUser = async (req, res) => {
+  res.status(StatusCodes.OK).json({ 
+    userId: req.user.userId, 
+    username: req.user.username 
+  });
+};
 
 module.exports = {
   register,
   login,
+  getCurrentUser,
 }
