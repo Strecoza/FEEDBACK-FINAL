@@ -31,12 +31,12 @@ app.use(rateLimiter({
 }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
-/*часть от корс тк проблема с хостами{
-  origin: ["http://localhost:5500","http://localhost:3000" ],  //надо изменить и добавить фронтэнд-домен!!!!
+
+app.use(cors({
+  origin: ["https://feedback-frontend-fib0.onrender.com"], 
   methods: "GET, POST, PATCH, DELETE",
   credentials: true,
-}));*/
+}));
 app.use(xss());
 app.use(express.static("public"));
 
