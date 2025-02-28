@@ -52,7 +52,7 @@ export const deleteComment = (id, token) => {
 
 // Authorization
 export const registerUser = (data) => axios.post(`${API_URL}/auth/register`, data);
-export const loginUser = (data) => axios.post(`${API_URL}/auth/login`, data);
+export const loginUser = (data) => api.post(`${API_URL}/auth/login`, data);
 export const getCurrentUser = (token) => api.get("/auth/current", { headers: { Authorization: `Bearer ${token}` } });
 
 export default api;

@@ -9,7 +9,9 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log(email, password)
     try {
+      
       const response = await loginUser({ email, password });
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
@@ -22,8 +24,8 @@ function LoginPage() {
     <div className="container text-center mt-5">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <input className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input id = "email" className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input id = "password" className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn btn-danger w-100" type="submit">Login</button>
       </form>
     </div>
