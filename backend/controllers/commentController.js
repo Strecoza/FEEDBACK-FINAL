@@ -30,7 +30,7 @@ const deleteComment = async (req, res) => {
         throw new NotFound(`No comment with id ${req.params.id }`)
         }
     if (!comment.user||comment.user.toString()!== req.user.userId) {
-        throw new BadRequest('Sorry, you are not allowed to delete this comment');
+        return res.status(403).json({message:'Sorry, you are not allowed to delete this comment'});
         }
     await comment.deleteOne();
     res.status(StatusCodes.NO_CONTENT).send();
