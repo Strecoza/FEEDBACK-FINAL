@@ -27,7 +27,7 @@ function FeedbackForm({ onSubmit, initialData = {} }) {
 
   const handleUpvote = async ()=> {
     try{
-        await api.upvoteFeedback(initialData._id, token);
+        await api.upvoteFeedback(initialData._id);
         setVotes(votes+1);
         onSubmit()
     } catch(error){

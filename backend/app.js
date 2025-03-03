@@ -33,10 +33,14 @@ app.use(express.json());
 app.use(helmet());
 
 app.use(cors({
-  origin: ["https://feedback-frontend-fib0.onrender.com"], 
-  methods: "GET, POST, PATCH, DELETE",
+  origin: ["https://feedback-frontend-fib0.onrender.com" ], 
+  methods: "GET, POST, PATCH, DELETE, PUT",
   credentials: true,
 }));
+/*часть от корс {
+  origin: ["http://localhost:5500","http://localhost:3000"  ],  //поменять при деплое
+}));*/
+
 app.use(xss());
 //app.use(express.static("public"));
 

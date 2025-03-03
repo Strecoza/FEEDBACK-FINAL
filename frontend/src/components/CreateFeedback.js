@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as api from "../services/api";
 
 const CreateFeedback = () => {
@@ -8,7 +8,7 @@ const CreateFeedback = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    const location = useLocation();
+ 
     const token = localStorage.getItem("token");
 
     const handleSubmit = async (e) => {
@@ -22,10 +22,7 @@ const CreateFeedback = () => {
 
         try {
             await api.createFeedback({ title, description }, token);
-            if (location.state?.refreshDashboard) {
-                location.state.refreshDashboard();
-            }
-            navigate("/dashboard");
+            navigate("/dashboard", {state: {refresh: true}});
         } catch (err) {
             console.error("Error creating feedback:", err);
             setError("Failed to create feedback. Please try again.");

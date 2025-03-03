@@ -23,8 +23,8 @@ function RegisterPage() {
       <h2>Register</h2>
       <form onSubmit={handleRegister}>
         <input className="form-control mb-2" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-        <input className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input id="email" className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input id= "password" className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn btn-primary w-100" type="submit">Register</button>
       </form>
     </div>

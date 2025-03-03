@@ -35,7 +35,8 @@ const getFeedback = async (req, res) => {
 };
 
 const updateFeedback = async (req, res) => {
-  const {title, description} = req.body;
+  const {title, description, updatedAt} = req.body;
+  //console.log("income update request:", req.body);
   const feedback = await Feedback.findById( req.params.id );
   if (!feedback) {
     throw new NotFound(`No feedback with id ${req.params.id }`)
@@ -47,6 +48,7 @@ const updateFeedback = async (req, res) => {
   
   feedback.title = title|| feedback.title;
   feedback.description = description|| feedback.description;
+  feedback.updatedAt = updatedAt || new Date();
 
   await feedback.save();
   res.status(StatusCodes.OK).json( feedback );
