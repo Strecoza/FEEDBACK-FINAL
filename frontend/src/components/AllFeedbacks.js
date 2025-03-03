@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../services/api";
+import Pagination from "./Pagination";
 
 const AllFeedbacks = () => {
     const [feedbacks, setFeedbacks] = useState([]); 
@@ -79,11 +80,7 @@ const AllFeedbacks = () => {
                 </div>
                 ))}
             </div>
-            <div className="flex justify-center gap-4 w-full mt-6 gap-4">
-                <button className="btn btn-outline-primary mx-2" disabled= {page === 1} onClick={() => setPage(page - 1)}> Previous</button>
-                <span className="text-lg font-medium" >  Page {page} of {totalPages}</span>
-                <button className="btn btn-outline-primary mx-2" disabled = {page === totalPages} onClick= {() => setPage(page + 1)}>Next</button>
-            </div>
+            <Pagination page = {page} totalPages={totalPages} setPage = {setPage}/>
         </div>
     );
 };
