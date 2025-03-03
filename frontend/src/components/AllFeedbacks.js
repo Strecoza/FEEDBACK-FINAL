@@ -65,13 +65,13 @@ const AllFeedbacks = () => {
                     LOGOUT
                 </button>              
             </div>
-            <h1 className="text-2xl font-bold mb-4 text-center" >All Feedbacks</h1>
+            <h1 className="text-2xl font-bold mb-2 text-center" >All Feedbacks</h1>
             {loading && <p>Loading feedbacks...</p>}
             {error && <p className="text-center text-red-500">{error}</p>}
             {feedbacks.length === 0 && !loading && !error && <p>No feedbacks available.</p>}
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3  gap-1">
             {currentFeedbacks.map((feedback) => (
-                <div key={feedback._id} className="p-4 border rounded shadow mb-3">
+                <div key={feedback._id} className="p-2 border rounded shadow mb-2">
                     <h2 className="text-xl font-semibold">{feedback.title}</h2>
                     <p className="text-gray-700">{feedback.description}</p>
                     <div className="flex justify-between items-center mt-2">

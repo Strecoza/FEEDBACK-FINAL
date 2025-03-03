@@ -7,8 +7,8 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
    // const [userId, setUserId] = useState(null); 
     const token = localStorage.getItem("token");
-
-   
+    const [editMode, setEditMode] = useState(null);
+    const [editData, setEditData] = useState({});
 
     const navigate = useNavigate();
 
@@ -17,19 +17,16 @@ function Dashboard() {
         try {
             const userResponse = await api.getCurrentUser(token);
             const fetchedUserId = userResponse.data.userId;
-            //setUserId(fetchedUserId); 
-            //console.log("authtorized user", fetchedUserId);
 
             const feedbackResponse = await api.getAllFeedbacks();
            // console.log("full response:", feedbackResponse.feedbacks);
             if (!feedbackResponse || !feedbackResponse.feedbacks) {
                 throw new Error("Invalid response format");
             }
-            //console.log ("all feedbacks:", feedbackResponse.feedbacks) 
+            //console.log ("all fb:", feedbackResponse.feedbacks) 
             
             const userFeedbacks = feedbackResponse.feedbacks.filter(fb => fb.createdBy && (fb.createdBy._id === fetchedUserId || fb.createdBy === fetchedUserId));
             setFeedbacks(userFeedbacks);
-            
         } catch (error) {
             console.error("Error fetching feedbacks:", error);
             setFeedbacks([]);
@@ -49,6 +46,34 @@ function Dashboard() {
     const handleCreate = () => {
         navigate("/create-feedback", { state: { refreshDashboard: true } });
     };
+    //edit feedback
+    const handleEdit = (fb) => {
+        setEditMode(fb._id);
+        setEditData({title: fb.title, description: fb.description});
+    }
+    const handleInputChange = (e,field) => {
+        setEditData(prev =>({...prev, [field]: e.target.value}));
+    }
+    //save edited
+    const handleSaveEdit = async (id) => {
+        try{
+            await api.updateFeedback(id, editData);
+            fetchFeedbacks();
+        } catch(error){
+            console.error("Error edit:", error);
+        }
+        setEditMode(null);
+    }
+    //update feedback
+    const handleUpdateDate = async (id) => {
+        try{
+            const updateDate = { updatedAt: new Date().toLocaleString()};
+            await api.updateFeedback(id, updateDate);
+            fetchFeedbacks();
+        } catch(error){
+            console.error("Error update:", error);
+        }
+    }
 
     return (
         <div className="container mt-4 flex flex-col min-h-screen">
@@ -67,11 +92,29 @@ function Dashboard() {
             ) : feedbacks.length > 0 ? (
                 feedbacks.map((fb) => (
                     <div key={fb._id || fb.id} className="card p-3 mb-2">
-                        <h3>{fb.title}</h3>
-                        <p>{fb.description}</p>
+                        {editMode === fb._id ? (
+                            <div>
+                                <input className="form-control mb-2" type="text"  value={editData.title} onChange={(e) => handleInputChange(e, "title")}/>
+                                <textarea className="form-control mb-2" value={editData.description} onChange={(e) => handleInputChange(e, "description")}/>
+                                <button className="btn btn-success w-25 btn-sm mb-2" onClick = {() => handleSaveEdit(fb._id)}>SAVE</button>
+                            </div>
+                        ): (
+                            <div>
+                                <h3>{fb.title}</h3>
+                                <p>{fb.description}</p>
+                                <small className="text-muted">Created at: {new Date(fb.createdAt).toLocaleString()}</small>
+                            </div>
+                        )}
+                        
                         <div className="d-flex justify-content-between gap-5"> 
-                            <button className="btn btn-success w-25 btn-sm opacity-80" onClick={() => navigate(`/edit-feedback/${fb._id || fb.id}`)}>EDIT</button>
-                            <button className="btn btn-success w-25 btn-sm opacity-80" onClick ={() => alert('Update functionality here')}> UPDATE </button>
+                            {editMode=== fb._id ? (
+                                <button className="btn btn-secondary w-25 btn-sm opacity-80" onClick={() => setEditMode(null)}>CANCEL</button>
+                            ) : (
+                                <button className="btn btn-success w-25 btn-sm opacity-80" onClick={() => handleEdit(fb)}>EDIT</button>
+                            )}
+
+                            <button className="btn btn-success w-25 btn-sm opacity-80" onClick ={() => handleUpdateDate(fb._id)}> UPDATE </button>
+
                             <button className="btn btn-danger w-25 btn-sm opacity-80" onClick={async () => {
                                 await api.deleteFeedback(fb._id || fb.id);
                                 fetchFeedbacks();
