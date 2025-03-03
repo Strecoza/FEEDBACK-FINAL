@@ -19,13 +19,14 @@ function Dashboard() {
             const fetchedUserId = userResponse.data.userId;
 
             const feedbackResponse = await api.getAllFeedbacks();
-           // console.log("full response:", feedbackResponse.feedbacks);
+            console.log("full response:", feedbackResponse);
             if (!feedbackResponse || !feedbackResponse.feedbacks) {
                 throw new Error("Invalid response format");
             }
             //console.log ("all fb:", feedbackResponse.feedbacks) 
             
             const userFeedbacks = feedbackResponse.feedbacks.filter(fb => fb.createdBy && (fb.createdBy._id === fetchedUserId || fb.createdBy === fetchedUserId));
+            console.log("users fb:", userFeedbacks);
             setFeedbacks(userFeedbacks);
         } catch (error) {
             console.error("Error fetching feedbacks:", error);
@@ -57,19 +58,23 @@ function Dashboard() {
     //save edited
     const handleSaveEdit = async (id) => {
         try{
+            setEditMode(null);
             await api.updateFeedback(id, editData);
             fetchFeedbacks();
         } catch(error){
             console.error("Error edit:", error);
         }
-        setEditMode(null);
     }
     //update feedback
     const handleUpdateDate = async (id) => {
         try{
             const updateDate = { updatedAt: new Date().toLocaleString()};
             await api.updateFeedback(id, updateDate);
-            fetchFeedbacks();
+
+            setFeedbacks(prevFeedbacks => 
+                prevFeedbacks.map(fb => fb._id ===id ? {...fb, updatedAt: updateDate.updatedAt} : fb)
+            );
+            //fetchFeedbacks();
         } catch(error){
             console.error("Error update:", error);
         }
@@ -102,7 +107,12 @@ function Dashboard() {
                             <div>
                                 <h3>{fb.title}</h3>
                                 <p>{fb.description}</p>
-                                <small className="text-muted">Created at: {new Date(fb.createdAt).toLocaleString()}</small>
+                                <div className="d-flex justify-content-between">
+                                    <small className="text-muted">Created at: {new Date(fb.createdAt).toLocaleString()}</small>
+                                    {fb.updatedAt && (
+                                    <small className="text-muted ">Updated at: {new Date(fb.updatedAt).toLocaleString()} </small>
+                                    )}
+                                </div>   
                             </div>
                         )}
                         
