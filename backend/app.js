@@ -31,6 +31,7 @@ app.use(rateLimiter({
 }));
 app.use(express.json());
 app.use(helmet());
+
 app.use(cors({
   origin: ["https://feedback-frontend-fib0.onrender.com" ], 
   methods: "GET, POST, PATCH, DELETE, PUT",
@@ -39,8 +40,9 @@ app.use(cors({
 /*часть от корс {
   origin: ["http://localhost:5500","http://localhost:3000"  ],  //поменять при деплое
 }));*/
+
 app.use(xss());
-app.use(express.static("public"));
+//app.use(express.static("public"));
 
 // routes
 app.use('/api/v1/auth', authRoutes);
@@ -50,12 +52,12 @@ app.use('/api/v1/comments', authenticateUser ,commentRoutes);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT;// || 5500;
+const port = process.env.PORT || 10000;
 
 const start = async () => {
   try {
     await connectDB (process.env.MONGO_URI)
-    app.listen(port, () =>
+    app.listen(port, "0.0.0.0", () =>
       console.log(`Server is listening on port ${port}...`)
     );
   } catch (error) {
