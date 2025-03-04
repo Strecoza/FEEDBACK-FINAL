@@ -86,7 +86,7 @@ function Dashboard() {
                 <button className="btn btn-danger" onClick={() => { localStorage.removeItem("token"); navigate("/"); }}>
                     LOGOUT
                 </button>
-                <button className="btn btn-primary" onClick={() => navigate("/all-feedbacks")}>SEE ALL FEEDBACKS</button>
+                <button className="btn btn-primary" onClick={() => navigate("/all-feedbacks")}>SEE ALL FEEDBACK</button>
             </div>
             <div className="text-center mb-3">
                 <button className="btn btn-success" onClick={handleCreate}>CREATE FEEDBACK</button>
@@ -134,7 +134,7 @@ function Dashboard() {
                     </div>
                 ))
             ) : (
-                <p className="text-center mt-5">No feedbacks yet</p>
+                <p className="text-center mt-5">No feedback yet</p>
             )}
         </div>
     );
