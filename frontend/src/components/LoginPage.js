@@ -24,8 +24,8 @@ function LoginPage() {
     <div className="container text-center mt-5">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <input id = "email" className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input id = "password" className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input name="email" autoComplete="email" id = "email" className="form-control mb-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input name="password" autoComplete="current-password" id = "password" className="form-control mb-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn btn-danger w-100" type="submit">Login</button>
       </form>
     </div>
