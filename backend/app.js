@@ -15,7 +15,7 @@ const authenticateUser = require('./middleware/authMiddleware');
 //routers
 const authRoutes = require('./routes/authRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
-const commentRoutes = require('./routes/commentRoutes');
+
 
 const app = express();
 
@@ -47,7 +47,7 @@ app.use(xss());
 // routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/feedback', feedbackRoutes);
-app.use('/api/v1/comments', authenticateUser ,commentRoutes);
+
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
