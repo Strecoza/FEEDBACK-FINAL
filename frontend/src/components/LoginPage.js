@@ -9,7 +9,7 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(email, password)
+  
     try {
       
       const response = await loginUser({ email, password });

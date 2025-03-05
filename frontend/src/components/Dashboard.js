@@ -5,7 +5,7 @@ import * as api from "../services/api";
 function Dashboard() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [loading, setLoading] = useState(true);
-   // const [userId, setUserId] = useState(null); 
+   
     const token = localStorage.getItem("token");
     const [editMode, setEditMode] = useState(null);
     const [editData, setEditData] = useState({});
@@ -19,14 +19,14 @@ function Dashboard() {
             const fetchedUserId = userResponse.data.userId;
 
             const feedbackResponse = await api.getAllFeedbacks();
-            console.log("full response:", feedbackResponse);
+            
             if (!feedbackResponse || !feedbackResponse.feedbacks) {
                 throw new Error("Invalid response format");
             }
-            //console.log ("all fb:", feedbackResponse.feedbacks) 
+            
             
             const userFeedbacks = feedbackResponse.feedbacks.filter(fb => fb.createdBy && (fb.createdBy._id === fetchedUserId || fb.createdBy === fetchedUserId));
-            console.log("users fb:", userFeedbacks);
+           
             setFeedbacks(userFeedbacks);
         } catch (error) {
             console.error("Error fetching feedbacks:", error);

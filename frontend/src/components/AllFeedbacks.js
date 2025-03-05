@@ -8,7 +8,7 @@ const AllFeedbacks = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
-    //const [totalPages, setTotalPages] = useState(1);
+    
     const feedbacksPerPage = 4; 
     const navigate = useNavigate();
 
@@ -17,13 +17,12 @@ const AllFeedbacks = () => {
         setError(null);
         try {
             const response = await api.getAllFeedbacks({}); 
-            console.log("AllFeedbacks - API Response:", response);
 
             if (!response || !Array.isArray(response.feedbacks)) {
                 throw new Error("Invalid response format");
             }
             setFeedbacks(response.feedbacks); 
-           // setTotalPages(response.totalPages || Math.ceil(response.feedbacks.length / feedbacksPerPage)); 
+         
         } catch (error) {
             console.error("Error fetching feedbacks:", error);
             setError("Failed to load feedbacks. Please try again later.");
